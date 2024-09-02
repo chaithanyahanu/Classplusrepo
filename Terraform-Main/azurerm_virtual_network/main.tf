@@ -15,7 +15,7 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.vnet_address_space
   location            = data.azurerm_resource_group.resource_group_name.location
   resource_group_name = data.azurerm_resource_group.resource_group_name.name
-  tags                = var.tags
+  tags                = data.azurerm_resource_group.resource_group_name.tags
 }
 
 resource "azurerm_subnet" "subnet" {
