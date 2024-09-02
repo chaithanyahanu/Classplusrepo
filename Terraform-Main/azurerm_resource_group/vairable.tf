@@ -7,3 +7,10 @@ variable "location" {
   type    = string
   default = "East US"
 }
+variable "tags" {
+  type        = map(string)
+  description = "Tags used for the deployment"
+  default = {
+    "Environment" = "Prod"
+  }
+}
