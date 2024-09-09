@@ -27,7 +27,6 @@ resource "azurerm_storage_account" "storage" {
 
   # Optional, configuring the access tiers and network access
   access_tier               = var.access_tier
-  allow_blob_public_access  = false
   min_tls_version           = "TLS1_2"
   
   tags = data.azurerm_resource_group.existing_rg.tags
