@@ -18,11 +18,4 @@ resource "azurerm_search_service" "example" {
   partition_count = var.partition_count
 }
 
-# Output the Azure Cognitive Search service name and endpoint
-output "search_service_name" {
-  value = azurerm_search_service.example.name
-}
 
-output "search_service_endpoint" {
-  value = azurerm_search_service.example.query_keys[0].primary_endpoint
-}
