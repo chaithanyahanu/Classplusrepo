@@ -13,9 +13,8 @@ provider "azurerm" {
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet_name
   address_space       = var.vnet_address_space
-  location            = data.azurerm_resource_group.resource_group_name.location
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.resource_group_name.name
-  tags                = data.azurerm_resource_group.resource_group_name.tags
 }
 
 resource "azurerm_subnet" "subnet" {
