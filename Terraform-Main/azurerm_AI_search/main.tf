@@ -2,21 +2,18 @@ provider "azurerm" {
   features {}
 }
 
-# Data block to reference the existing resource group
-data "azurerm_resource_group" "existing_rg" {
+data "azurerm_resource_group" "existing" {
   name = "classplus-prod-RG"
 }
 
-# Azure Cognitive Search service
 resource "azurerm_search_service" "example" {
-  name                = var.search_service_name  # Must be globally unique
-  location            = data.azurerm_resource_group.existing_rg.location
-  resource_group_name = data.azurerm_resource_group.existing_rg.name
+  name                = "example-search-service"
+  location            = data.azurerm_resource_group.existing.location
+  resource_group_name = data.azurerm_resource_group.existing.name
+  sku                 = var.sku
+  replicas            = var.replicas
+  partitions          = var.partitions
 
-  sku_name = "standard"  # Corrected attribute
-
-  # Optional: Tags
-  tags = {
-    Environment = "Production"
+  tags = data.azurerm_resource_group.existing.tags
   }
 }
