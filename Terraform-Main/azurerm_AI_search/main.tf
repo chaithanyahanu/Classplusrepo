@@ -13,9 +13,8 @@ resource "azurerm_search_service" "example" {
   location            = data.azurerm_resource_group.existing_rg.location
   resource_group_name = data.azurerm_resource_group.existing_rg.name
 
-  sku {
-    name = "standard"
-  }
+  sku_name = "standard"
 
+  # Optional: Tags
   tags = data.azurerm_resource_group.existing_rg.tags
 }
