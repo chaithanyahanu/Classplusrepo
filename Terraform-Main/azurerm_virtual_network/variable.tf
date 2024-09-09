@@ -1,7 +1,27 @@
+variable "resourcegroup_name" {
+  type        = string
+  description = "The name of the resource group"
+  default     = "classplus-prod-RG"
+}
+
+variable "location" {
+  type        = string
+  description = "The region for the deployment"
+  default     = "East US"
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags used for the deployment"
+  default = {
+    "Environment" = "Prod"
+  }
+}
+
 variable "vnet_name" {
   type        = string
   description = "The name of the vnet"
-  default     = "prod-vnet"
+  default     = "Prod-vnet"
 }
 
 variable "vnet_address_space" {
