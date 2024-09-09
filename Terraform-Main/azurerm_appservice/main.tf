@@ -17,6 +17,9 @@ resource "azurerm_app_service_plan" "example" {
     tier = "PremiumV2"
     size = "P1v2"
   }
+
+  # App Service Plan is Linux-based
+  kind = "Linux"
 }
 
 # App Service resource
@@ -30,9 +33,5 @@ resource "azurerm_app_service" "example" {
     linux_fx_version = "PYTHON|3.9"  # Set correct Python version
     scm_type         = "LocalGit"
   }
-
-  # Optional: App settings for your App Service
-  app_settings = {
-    "SOME_KEY" = "some-value"
   }
-}
+
