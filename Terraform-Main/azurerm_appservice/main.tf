@@ -7,6 +7,7 @@ data "azurerm_resource_group" "existing_rg" {
   name = "classplus-prod-RG"
 }
 
+# App Service Plan resource
 resource "azurerm_app_service_plan" "example" {
   name                = var.app_service_plan_name
   location            = data.azurerm_resource_group.existing_rg.location
@@ -18,6 +19,7 @@ resource "azurerm_app_service_plan" "example" {
   }
 }
 
+# App Service resource
 resource "azurerm_app_service" "example" {
   name                = var.app_service_name
   location            = data.azurerm_resource_group.existing_rg.location
@@ -25,8 +27,12 @@ resource "azurerm_app_service" "example" {
   app_service_plan_id = azurerm_app_service_plan.example.id
 
   site_config {
-    python_version = "3.9"
-    scm_type       = "LocalGit"
+    linux_fx_version = "PYTHON|3.9"  # Set correct Python version
+    scm_type         = "LocalGit"
   }
 
+  # Optional: App settings for your App Service
+  app_settings = {
+    "SOME_KEY" = "some-value"
+  }
 }
