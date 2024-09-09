@@ -25,11 +25,4 @@ variable "access_tier" {
   type        = string
   default     = "Hot"
 }
-# Tags for the storage account
-variable "tags" {
-  description = "A map of tags to assign to the resource"
-  type        = map(string)
-  default     = {
-    environment = "prod"
-  }
-}
+
