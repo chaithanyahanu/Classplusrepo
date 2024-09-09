@@ -3,6 +3,11 @@ variable "resource_group_name" {
   description = "The name of the resource group"
   default     = "classplus-prod-RG"
 }
+variable "location" {
+  type        = string
+  description = "The region for the deployment"
+  default     = "East US"
+}
 
 variable "vnet_name" {
   type        = string
