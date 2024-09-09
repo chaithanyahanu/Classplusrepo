@@ -7,7 +7,7 @@ data "azurerm_resource_group" "existing" {
 }
 
 resource "azurerm_search_service" "example" {
-  name                = "example-search-service"
+  name                = var.search_service_name
   location            = data.azurerm_resource_group.existing.location
   resource_group_name = data.azurerm_resource_group.existing.name
   sku                 = var.sku
