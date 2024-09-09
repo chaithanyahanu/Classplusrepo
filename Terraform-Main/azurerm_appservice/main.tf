@@ -7,17 +7,16 @@ data "azurerm_resource_group" "existing_rg" {
   name = "classplus-prod-RG"
 }
 
-# App Service Plan resource (use 'azurerm_service_plan' with the correct arguments)
+# App Service Plan resource
 resource "azurerm_service_plan" "example" {
   name                = var.app_service_plan_name
   location            = data.azurerm_resource_group.existing_rg.location
   resource_group_name = data.azurerm_resource_group.existing_rg.name
 
-  os_type = "Linux"  # Specify the OS type
+  os_type  = "Linux"  # Specify the OS type
+  sku_name = "P1v2"   # Specify the SKU name
 
-  sku_name = "P1v2"  # Specify SKU name directly
-
-  reserved = true  # Must be true for Linux
+  # 'reserved' is no longer necessary, as it is inferred automatically
 }
 
 # App Service resource
@@ -25,7 +24,7 @@ resource "azurerm_app_service" "example" {
   name                = var.app_service_name
   location            = data.azurerm_resource_group.existing_rg.location
   resource_group_name = data.azurerm_resource_group.existing_rg.name
-  app_service_plan_id = azurerm_service_plan.example.id  # Correct field name
+  app_service_plan_id = azurerm_service_plan.example.id
 
   site_config {
     linux_fx_version = "PYTHON|3.9"  # Set correct Python version
