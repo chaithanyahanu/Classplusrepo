@@ -4,7 +4,7 @@ provider "azurerm" {
 
 # Data block to fetch the existing resource group
 data "azurerm_resource_group" "existing" {
-  name = var.resource_group_name
+  name = "classplus-prod-RG"
 }
 
 # Azure OpenAI account configuration
