@@ -2,24 +2,21 @@ provider "azurerm" {
   features {}
 }
 
+# Use existing resource group
+data "azurerm_resource_group" "existing_rg" {
+  name = "classplus-prod-RG"
+}
+
+# Translator Cognitive Service
 resource "azurerm_cognitive_account" "translator" {
   name                = var.translator_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  kind                = "CognitiveServices"
+  location            = data.azurerm_resource_group.existing_rg.location
+  resource_group_name = data.azurerm_resource_group.existing_rg.name
+  kind                = "Translator"
   sku_name            = var.sku_name
 
-  properties {
-    custom_subdomain_name = var.custom_subdomain_name
+  # Optional, enables diagnostics settings
+  identity {
+    type = "SystemAssigned"
   }
-
-  tags = var.tags
-}
-
-output "translator_endpoint" {
-  value = azurerm_cognitive_account.translator.endpoint
-}
-
-output "translator_key" {
-  value = azurerm_cognitive_account.translator.primary_access_key
 }
