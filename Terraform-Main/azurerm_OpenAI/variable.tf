@@ -1,7 +1,7 @@
 variable "openai_account_name" {
   description = "Name of the Azure OpenAI account."
   type        = string
-  default     = "clsopenaiyui"
+  default     = "clsopenai789"
 }
 
 variable "sku_name" {
