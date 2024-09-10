@@ -1,10 +1,12 @@
 provider "azurerm" {
   features {}
+  version = "4.1.0"  # Ensure you're using a version that supports azurerm_template_deployment
 }
 
 # Data block to fetch the existing resource group
 data "azurerm_resource_group" "existing" {
   name = "classplus-prod-RG"
+
 }
 
 # ARM template deployment for Azure OpenAI
