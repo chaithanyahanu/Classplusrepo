@@ -1,32 +1,12 @@
 variable "translator_name" {
-  description = "The name of the Azure Translator service"
+  description = "The name of the Translator cognitive service"
   type        = string
-}
-
-variable "resource_group_name" {
-  description = "The name of the existing resource group"
-  type        = string
-}
-
-variable "location" {
-  description = "The location of the resource group"
-  type        = string
+  default     = "clstranslator456"
 }
 
 variable "sku_name" {
-  description = "The SKU for the Azure Translator service"
+  description = "The SKU of the Translator cognitive service (e.g. F0 for free or S1 for standard)"
   type        = string
-  default     = "S1"  # You can adjust this depending on your needs
+  default     = "S1"
 }
 
-variable "custom_subdomain_name" {
-  description = "Optional subdomain for the Azure Translator service"
-  type        = string
-  default     = ""
-}
-
-variable "tags" {
-  description = "Tags for the Azure Translator service"
-  type        = map(string)
-  default     = {}
-}
