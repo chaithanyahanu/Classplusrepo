@@ -12,10 +12,9 @@ resource "azurerm_cognitive_account" "translator" {
   name                = var.translator_name
   location            = data.azurerm_resource_group.existing_rg.location
   resource_group_name = data.azurerm_resource_group.existing_rg.name
-  kind                = "Translator"
+  kind                = "TextTranslation"  # Corrected kind
   sku_name            = var.sku_name
 
-  # Optional, enables diagnostics settings
   identity {
     type = "SystemAssigned"
   }
