@@ -2,20 +2,38 @@ provider "azurerm" {
   features {}
 }
 
-# Using an existing resource group
+# Data block to fetch the existing resource group
 data "azurerm_resource_group" "existing" {
   name = "classplus-prod-RG"
 }
 
-# Define Azure Cognitive Search Service
-resource "azurerm_search_service" "example" {
-  name                = var.search_service_name
+# ARM template deployment for Azure OpenAI
+resource "azurerm_template_deployment" "openai_deployment" {
+  name                = "openai-deployment"
   resource_group_name = data.azurerm_resource_group.existing.name
-  location            = data.azurerm_resource_group.existing.location
-  sku                 = "standard"
+  deployment_mode     = "Incremental"
 
-  replica_count   = var.replica_count
-  partition_count = var.partition_count
+  template_body = <<DEPLOY
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2023-05-01",
+      "name": "${var.openai_account_name}",
+      "location": "${data.azurerm_resource_group.existing.location}",
+      "kind": "OpenAI",
+      "sku": {
+        "name": "${var.sku_name}"
+      },
+      "properties": {
+        "publicNetworkAccess": "Enabled"
+      }
+    }
+  ]
 }
+DEPLOY
 
-
+  parameters = {}
+}
