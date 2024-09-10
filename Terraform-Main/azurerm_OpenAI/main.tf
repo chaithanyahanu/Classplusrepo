@@ -7,14 +7,33 @@ data "azurerm_resource_group" "existing" {
   name = "classplus-prod-RG"
 }
 
-# Azure OpenAI account configuration
-resource "azurerm_openai_account" "openai_account" {
-  name                = var.openai_account_name
-  location            = data.azurerm_resource_group.existing.location
+# ARM template deployment for Azure OpenAI
+resource "azurerm_template_deployment" "openai_deployment" {
+  name                = "openai-deployment"
   resource_group_name = data.azurerm_resource_group.existing.name
-  sku_name            = var.sku_name
+  deployment_mode     = "Incremental"
 
-  identity {
-    type = "SystemAssigned"
-  }
+  template_body = <<DEPLOY
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2023-05-01",
+      "name": "${var.openai_account_name}",
+      "location": "${data.azurerm_resource_group.existing.location}",
+      "kind": "OpenAI",
+      "sku": {
+        "name": "${var.sku_name}"
+      },
+      "properties": {
+        "publicNetworkAccess": "Enabled"
+      }
+    }
+  ]
+}
+DEPLOY
+
+  parameters = {}
 }
