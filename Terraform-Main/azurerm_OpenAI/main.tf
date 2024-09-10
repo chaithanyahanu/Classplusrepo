@@ -1,16 +1,14 @@
 provider "azurerm" {
   features {}
-  version = "4.1.0"  # Ensure you're using a version that supports azurerm_template_deployment
 }
 
 # Data block to fetch the existing resource group
 data "azurerm_resource_group" "existing" {
   name = "classplus-prod-RG"
-
 }
 
 # ARM template deployment for Azure OpenAI
-resource "azurerm_template_deployment" "openai_deployment" {
+resource "azurerm_resource_group_template_deployment" "openai_deployment" {
   name                = "openai-deployment"
   resource_group_name = data.azurerm_resource_group.existing.name
   deployment_mode     = "Incremental"
@@ -22,7 +20,7 @@ resource "azurerm_template_deployment" "openai_deployment" {
   "resources": [
     {
       "type": "Microsoft.CognitiveServices/accounts",
-      "apiVersion": "2023-05-01",
+      "apiVersion": "2024-04-01-preview",
       "name": "${var.openai_account_name}",
       "location": "${data.azurerm_resource_group.existing.location}",
       "kind": "OpenAI",
